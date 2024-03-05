@@ -1,14 +1,23 @@
 import React from "react";
-import { Button } from "@radix-ui/themes";
-import { BookmarkIcon } from "@radix-ui/react-icons";
+import { Container, Card, Heading, Flex, Text, Link } from "@radix-ui/themes";
+import SigninForm from "@/app/components/auth/SigninForm";
+import NavLink from "next/link";
 const LoginPage = () => {
   return (
-    <div>
-      LoginPage
-      <Button>
-        <BookmarkIcon width="16" height="16" /> Bookmark
-      </Button>
-    </div>
+    <Container size={"1"} height={"100%"} className="p-3 md:p-0">
+      <Flex className="h-screen w-full items-center">
+        <Card className="w-full p-4">
+          <Heading>Sign In</Heading>
+          <SigninForm />
+          <Flex justify={"between"} my={"4"}>
+            <Text>Don't have an Account</Text>
+            <Link asChild>
+              <NavLink href={"/auth/register"}>Sign Up</NavLink>
+            </Link>
+          </Flex>
+        </Card>
+      </Flex>
+    </Container>
   );
 };
 
