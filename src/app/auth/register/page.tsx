@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Card, Heading, Flex, Text, Link } from "@radix-ui/themes";
 import NavLink from "next/link";
-import SignUpForm from "@/app/components/auth/SignUpForm";
+import SignUpForm from "@/components/auth/SignUpForm";
 const RegisterPage = () => {
   return (
     <Container size={"1"} height={"100%"} className="p-3 md:p-0">

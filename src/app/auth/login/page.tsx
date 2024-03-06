@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Card, Heading, Flex, Text, Link } from "@radix-ui/themes";
-import SigninForm from "@/app/components/auth/SigninForm";
+import SigninForm from "@/components/auth/SigninForm";
 import NavLink from "next/link";
 const LoginPage = () => {
   return (
@@ -10,7 +10,7 @@ const LoginPage = () => {
           <Heading>Sign In</Heading>
           <SigninForm />
           <Flex justify={"between"} my={"4"}>
-            <Text>Don't have an Account</Text>
+            <Text>Dont have an Account</Text>
             <Link asChild>
               <NavLink href={"/auth/register"}>Sign Up</NavLink>
             </Link>

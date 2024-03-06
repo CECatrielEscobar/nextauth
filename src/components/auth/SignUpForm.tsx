@@ -6,9 +6,12 @@ import {
 } from "@radix-ui/react-icons";
 import { Button, Flex, Text, TextField } from "@radix-ui/themes";
 import axios from "axios";
+import { signIn } from "next-auth/react";
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useRouter } from "next/navigation";
 const SignUpForm = () => {
+  const router = useRouter();
   const {
     register,
     control,
@@ -24,6 +27,19 @@ const SignUpForm = () => {
   const onSubmit = handleSubmit(async (data) => {
     const res = await axios.post("/api/auth/register", data);
     console.log(res);
+    if (res.status === 201) {
+      const result = await signIn("credentials", {
+        email: res.data.email,
+        password: data.password,
+        redirect: false,
+      });
+      console.log(result);
+      if (!result?.ok) {
+        console.log(result?.error);
+        return;
+      }
+      router.push("/dashboard");
+    }
   });
   return (
     <form onSubmit={onSubmit}>

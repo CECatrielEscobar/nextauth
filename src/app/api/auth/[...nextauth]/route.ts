@@ -11,7 +11,10 @@ const handler = NextAuth({
         username: { label: "Username", type: "text", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, request) {
+      async authorize(
+        credentials: Record<"email" | "password", string>,
+        request
+      ) {
         const { email, password } = credentials;
         const userFound = await prisma.user.findUnique({
           where: { email: email },
