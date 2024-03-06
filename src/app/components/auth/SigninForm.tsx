@@ -3,8 +3,11 @@ import { EnvelopeClosedIcon, LockClosedIcon } from "@radix-ui/react-icons";
 import { Button, Flex, Text, TextField } from "@radix-ui/themes";
 import { error } from "console";
 import { useForm, Controller } from "react-hook-form";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const SigninForm = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -17,8 +20,18 @@ const SigninForm = () => {
     },
   });
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async (data) => {
     console.log(data);
+    const res = await signIn("credentials", {
+      redirect: false,
+      email: data.email,
+      password: data.password,
+    });
+    if (!res?.ok) {
+      console.log(res);
+    }
+    router.push("/dashboard");
+    router.refresh();
   });
   return (
     <form onSubmit={onSubmit}>
