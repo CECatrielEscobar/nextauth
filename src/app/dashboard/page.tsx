@@ -2,8 +2,9 @@ import HeaderDashBoard from "@/components/dashboard/HeaderDashBoard";
 import { Container, Grid } from "@radix-ui/themes";
 import prisma from "@/libs/prisma";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+// import { authOptions } from "../api/auth/[...nextauth]/route";
 import ProjectCard from "@/projects/ProjectCard";
+import { authOptions } from "@/authConfig";
 
 async function loadProjects() {
   const session = await getServerSession(authOptions);
@@ -19,18 +20,18 @@ async function loadProjects() {
 const page = async () => {
   const projects = await loadProjects();
   return (
-    <Container className="mt-10">
+    <Container className="mt-10 px-5 xl:px-0">
       <HeaderDashBoard />
       {projects.length === 0 ? (
         <h1 className="text-2xl mt-8 text-slate-500">
           No hay proyectos creados...
         </h1>
       ) : (
-        <Grid columns={"3"} mt={"8"} gap={"4"}>
+        <div className="grid md:grid-cols-3 gap-5 mt-4">
           {projects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
-        </Grid>
+        </div>
       )}
     </Container>
   );

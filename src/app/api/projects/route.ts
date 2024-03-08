@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import prisma from "@/libs/prisma";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "@/authConfig";
+// import { authOptions } from "../auth/[...nextauth]/route";
 export async function POST(request: Request) {
   const data = await request.json();
   const session = await getServerSession(authOptions);
-  console.log(session);
+
   if (!session) {
     return NextResponse.json(
       {
@@ -25,6 +26,6 @@ export async function POST(request: Request) {
       },
     },
   });
-  console.log(newProject);
+
   return NextResponse.json({ message: "Creando" });
 }

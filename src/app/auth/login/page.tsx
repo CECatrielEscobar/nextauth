@@ -5,7 +5,7 @@ import NavLink from "next/link";
 const LoginPage = () => {
   return (
     <Container size={"1"} height={"100%"} className="p-3 md:p-0">
-      <Flex className="h-screen w-full items-center">
+      <Flex className="h-[calc(100vh-10rem)] w-full items-center">
         <Card className="w-full p-4">
           <Heading>Sign In</Heading>
           <SigninForm />

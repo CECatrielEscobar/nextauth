@@ -9,15 +9,15 @@ import {
   TextField,
 } from "@radix-ui/themes";
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useRouter, useParams } from "next/navigation";
 import { TrashIcon } from "@radix-ui/react-icons";
+import { toast } from "sonner";
 const TaskNewPage = () => {
   const router = useRouter();
-  const params = useParams();
-  console.log(params);
-  const { control, handleSubmit } = useForm({
+  const params = useParams() as { projectId: string };
+  const { control, handleSubmit, setValue } = useForm({
     values: {
       title: "",
       description: "",
@@ -31,6 +31,32 @@ const TaskNewPage = () => {
         router.push("/dashboard");
         router.refresh();
       }
+    } else {
+      const res = await axios.put(`/api/projects/${params.projectId}`, data);
+      console.log(res);
+      if (res.status === 200) {
+        router.push("/dashboard");
+        router.refresh();
+      }
+    }
+  });
+  const handleDelete = async (projectId: string) => {
+    console.log(projectId);
+    const res = await axios.delete(`/api/projects/${projectId}`);
+    if (res.status === 200) {
+      toast.success("Project deleted succesfully");
+    }
+    router.push("/dashboard");
+    router.refresh();
+  };
+
+  useEffect(() => {
+    if (params.projectId) {
+      axios.get(`/api/projects/${params.projectId}`).then((res) => {
+        console.log(res.data);
+        setValue("title", res.data.title);
+        setValue("description", res.data.description);
+      });
     }
   });
   return (
@@ -71,7 +97,10 @@ const TaskNewPage = () => {
           </form>
           <div className="flex justify-end my-4">
             {params.projectId && (
-              <Button color="red">
+              <Button
+                color="red"
+                onClick={() => handleDelete(params.projectId)}
+              >
                 <TrashIcon />
                 Delete Project
               </Button>

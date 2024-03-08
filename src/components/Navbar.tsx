@@ -11,10 +11,11 @@ import NavLink from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 const Navbar = () => {
-  const { data: session } = useSession();
-  console.log(session);
+  // ANOTACION CHEQUEAR TYPES NEXT AUTH TYPES
+  const { data: session, status } = useSession(); // para recuperar la sesion desde componente react
+  if (status === "loading") return null;
   return (
-    <nav className="bg-zinc-950 py-4">
+    <nav className="bg-zinc-950 px-10 xl:px-0 py-4">
       <Container>
         <Flex justify={"between"} align={"center"}>
           <NavLink href={"/"} passHref>
